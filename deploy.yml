@@ -1,0 +1,23 @@
+- name: Wait for systems to boot up and cloud-init to complete
+  hosts: all
+  gather_facts: no
+  any_errors_fatal: true
+  tasks:
+    - name: Wait up to 300 seconds
+      wait_for_connection:
+        delay: 3
+        sleep: 5
+        timeout: 300
+
+    - name: Gather all facts of cloud init
+      cloud_init_data_facts:
+      register: result
+
+    - name: Wait for cloud init to finish
+      cloud_init_data_facts:
+        filter: status
+      register: res
+      until: "res.cloud_init_data_facts.status.v1.stage is defined and not res.cloud_init_data_facts.status.v1.stage"
+      retries: 50
+      delay: 5
+
