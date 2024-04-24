@@ -21,17 +21,5 @@
       retries: 50
       delay: 5
 
-# Kafka
-# Ref. https://github.com/confluentinc/cp-ansible/blob/7.3.4-post/docs/hosts_example.yml
-- name: Deploy Confluent Kafka
-  hosts: all
-  vars:
-    installation_method: archive
-    redhat_java_package_name: java-11-openjdk
-    confluent_archive_file_source: http://dhcp01.isvlab.vmware.com/files/confluent/7.6/confluent-community-7.6.1.tar.gz
-    confluent_package_version: 7.6.1
-  collections:
-    - confluent.platform
-  roles:
-    - confluent.platform.all
-
+- name: Include a play after another play
+  ansible.builtin.import_playbook: confluent.platform.all
