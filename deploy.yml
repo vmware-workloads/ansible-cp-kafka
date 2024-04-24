@@ -33,5 +33,5 @@
   collections:
     - confluent.platform
   roles:
-    - all
+    - confluent.platform.all
 
