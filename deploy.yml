@@ -30,6 +30,8 @@
     redhat_java_package_name: java-11-openjdk
     confluent_archive_file_source: http://dhcp01.isvlab.vmware.com/files/confluent/7.6/confluent-community-7.6.1.tar.gz
     confluent_package_version: 7.6.1
-  roles:
+  collections:
     - confluent.platform
+  roles:
+    - confluent.common
 
