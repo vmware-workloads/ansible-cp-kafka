@@ -21,6 +21,13 @@
       retries: 50
       delay: 5
 
+- name: Configure hosts
+  hosts: all
+  gather_facts: no
+  any_errors_fatal: true
+  roles:
+    - ansible_role_create_hosts_file
+
 - name: Include a play after another play
   vars:
     installation_method: archive
