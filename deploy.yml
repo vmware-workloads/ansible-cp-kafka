@@ -23,7 +23,7 @@
 
 - name: Configure hosts
   hosts: all
-  gather_facts: no
+  gather_facts: yes
   any_errors_fatal: true
   roles:
     - ansible_role_create_hosts_file
