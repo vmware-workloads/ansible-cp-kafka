@@ -64,9 +64,25 @@
       | grep -i "{{ logs_dir }}/{{ logs_dir_prefix }}"
   register: mounted_data_disks
 
+- name: list mounted data disks
+  ansible.builtin.debug:
+    var: mounted_data_disks.stdout
+
 - name: set data disk variable
   ansible.builtin.set_fact:
     broker_logs_disks: "{{ mounted_data_disks.stdout }}"
+
+- name: Parse
+  ansible.builtin.find:
+    paths: "{{ logs_dir }}"
+    file_type: directory
+    use_regex: yes
+    patterns: "^{{ logs_dir_prefix }}\\d+$"
+  register: output
+
+- name: set data disk variable
+  ansible.builtin.set_fact:
+    broker_logs_disks: "{{ output.files | default([]) }}"
 
 - name: list mounted data disks
   ansible.builtin.debug:
