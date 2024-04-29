@@ -17,5 +17,5 @@
     var: logs_filesystem
 
 - name: mount disks (Debian/Ubuntu)
-  ansible.builtin.include_tasks: ansible_task_mount_disk_debian.yml
+  ansible.builtin.include_tasks: ansible_task_mount_disk_debian.yml.yml
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
