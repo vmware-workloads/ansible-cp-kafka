@@ -45,32 +45,32 @@
   roles:
     - ansible_role_mount_broker_disks
 
-- name: Include a play after another play
-  vars:
-    installation_method: archive
-    redhat_java_package_name: java-11-openjdk
-    confluent_archive_file_source: http://dhcp01.isvlab.vmware.com/files/confluent/7.6/confluent-7.6.1.tar.gz
-    confluent_package_version: 7.6.1
-
-    kafka_broker_custom_listeners:
-      broker:
-        name: BROKER
-        port: 9091
-        ssl_enabled: false
-        ssl_mutual_auth_enabled: false
-        sasl_protocol: none
-      internal:
-        name: INTERNAL
-        port: 9092
-        ssl_enabled: false
-        ssl_mutual_auth_enabled: false
-        sasl_protocol: none
-      client_listener:
-        name: CLIENT
-        port: 9093
-        ssl_enabled: true
-        ssl_mutual_auth_enabled: true
-        sasl_protocol: scram
-
-  ansible.builtin.import_playbook: confluent.platform.all
+#- name: Include a play after another play
+#  vars:
+#    installation_method: archive
+#    redhat_java_package_name: java-11-openjdk
+#    confluent_archive_file_source: http://dhcp01.isvlab.vmware.com/files/confluent/7.6/confluent-7.6.1.tar.gz
+#    confluent_package_version: 7.6.1
+#
+#    kafka_broker_custom_listeners:
+#      broker:
+#        name: BROKER
+#        port: 9091
+#        ssl_enabled: false
+#        ssl_mutual_auth_enabled: false
+#        sasl_protocol: none
+#      internal:
+#        name: INTERNAL
+#        port: 9092
+#        ssl_enabled: false
+#        ssl_mutual_auth_enabled: false
+#        sasl_protocol: none
+#      client_listener:
+#        name: CLIENT
+#        port: 9093
+#        ssl_enabled: true
+#        ssl_mutual_auth_enabled: true
+#        sasl_protocol: scram
+#
+#  ansible.builtin.import_playbook: confluent.platform.all
 
