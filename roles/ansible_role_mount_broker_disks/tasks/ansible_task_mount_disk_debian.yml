@@ -82,7 +82,8 @@
 
 - name: set data disk variable
   ansible.builtin.set_fact:
-    broker_logs_disks: "{{ output.files | default([]) }}"
+    broker_logs_disks: "{{ (broker_logs_disks | default([])) + [item['path']] }}"
+  loop: output.files
 
 - name: list mounted data disks
   ansible.builtin.debug:
