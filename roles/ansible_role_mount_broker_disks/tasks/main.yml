@@ -1,20 +1,20 @@
 - name: set variables
   ansible.builtin.set_fact:
-    logs_dir: "{{ broker_logs_dir | default(default_broker_logs_dir) }}"
-    logs_dir_prefix: "{{ broker_logs_dir_prefix | default(default_broker_logs_dir_prefix) }}"
-    logs_filesystem: "{{ broker_logs_filesystem | default(default_broker_logs_filesystem) }}"
+    log_dirs: "{{ broker_log_dirs | default(default_broker_log_dirs) }}"
+    log_dirs_prefix: "{{ broker_log_dirs_prefix | default(default_broker_log_dirs_prefix) }}"
+    log_filesystem: "{{ broker_log_filesystem | default(default_broker_log_filesystem) }}"
 
 - name: print logs.dir
   ansible.builtin.debug:
-    var: logs_dir
+    var: log_dirs
 
 - name: print logs.dir prefix
   ansible.builtin.debug:
-    var: logs_dir_prefix
+    var: log_dirs_prefix
 
 - name: print logs filesystem
   ansible.builtin.debug:
-    var: logs_filesystem
+    var: log_filesystem
 
 - name: mount disks (Debian/Ubuntu)
   ansible.builtin.include_tasks: ansible_task_mount_disk_debian.yml

@@ -1,3 +1,3 @@
-default_broker_logs_dir: /var/lib/kafka
-default_broker_logs_dir_prefix: data
-default_broker_logs_filesystem: xfs
+default_broker_log_dirs: /var/lib/kafka
+default_broker_log_dirs_prefix: data
+default_broker_log_filesystem: xfs

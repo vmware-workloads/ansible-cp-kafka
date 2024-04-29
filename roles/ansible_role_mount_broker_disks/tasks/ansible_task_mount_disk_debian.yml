@@ -42,17 +42,17 @@
 
 - name: create filesystem
   community.general.filesystem:
-    fstype: "{{ logs_filesystem }}"
+    fstype: "{{ log_filesystem }}"
     dev: "/dev/{{ item }}"
   loop: "{{ unused_disks }}"
 
 - name: mount data volumes
   ansible.posix.mount:
     src: "/dev/{{ item }}"
-    path: "{{ logs_dir }}/{{ logs_dir_prefix }}{{ index }}"
+    path: "{{ log_dirs }}/{{ log_dirs_prefix }}{{ index }}"
     opts: defaults
     state: mounted
-    fstype: "{{ logs_filesystem }}"
+    fstype: "{{ log_filesystem }}"
   loop: "{{ unused_disks }}"
   loop_control:
     index_var: index
@@ -61,7 +61,7 @@
   ansible.builtin.shell:
     cmd: >
       lsblk --list --noheadings --output MOUNTPOINT
-      | grep -i "{{ logs_dir }}/{{ logs_dir_prefix }}"
+      | grep -i "{{ log_dirs }}/{{ log_dirs_prefix }}"
   register: mounted_data_disks
 
 - name: list mounted data disks
@@ -74,17 +74,17 @@
 
 - name: Parse the data directories
   ansible.builtin.find:
-    paths: "{{ logs_dir }}"
+    paths: "{{ log_dirs }}"
     file_type: directory
     use_regex: yes
-    patterns: "^{{ logs_dir_prefix }}\\d+$"
+    patterns: "^{{ log_dirs_prefix }}\\d+$"
   register: output
 
 - name: set brokers logs.dir parameter
   ansible.builtin.set_fact:
     kafka_broker_custom_properties:
-      logs.dir: "{{ output.files | selectattr('path', 'defined') | map(attribute='path') | list | sort }}"
+      log.dirs: "{{ output.files | selectattr('path', 'defined') | map(attribute='path') | list | sort }}"
 
 - name: list mounted data disks
   ansible.builtin.debug:
-    var: kafka_broker_custom_properties['logs.dir']
+    var: kafka_broker_custom_properties['log.dirs']

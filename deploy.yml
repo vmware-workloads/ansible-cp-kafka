@@ -39,9 +39,9 @@
     - "os_family"
   any_errors_fatal: true
   vars:
-    #broker_logs_dir: /var/lib/kafka
-    #broker_logs_dir_prefix: data
-    #broker_logs_filesystem: xfs
+    #broker_log_dirs: /var/lib/kafka
+    #broker_log_dirs_prefix: data
+    #broker_log_filesystem: xfs
   roles:
     - ansible_role_mount_broker_disks
 
