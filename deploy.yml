@@ -23,10 +23,27 @@
 
 - name: Configure hosts
   hosts: all
-  gather_facts: yes
+  gather_facts: true
   any_errors_fatal: true
   roles:
     - ansible_role_create_hosts_file
+
+- name: Configure broker data disks
+  hosts: kafka_broker
+  gather_facts: true
+  gather_subset:
+    - "distribution"
+    - "distribution_release"
+    - "distribution_major_version"
+    - "distribution_version"
+    - "os_family"
+  any_errors_fatal: true
+  vars:
+    #broker_logs_dir: /var/lib/kafka
+    #broker_logs_dir_prefix: data
+    #broker_logs_filesystem: xfs
+  roles:
+    - ansible_role_mount_broker_disks
 
 - name: Include a play after another play
   vars:

@@ -1,0 +1,73 @@
+- name: gather hardware facts
+  ansible.builtin.setup:
+    gather_subset:
+      - hardware
+
+- name: Gather the list of mounted devices
+  ansible.builtin.shell:
+    cmd: >
+      lsblk --list --noheadings --output MOUNTPOINT,NAME
+      | awk '/^\//{print $2}'
+      | awk '/^sd/{print $1}'
+      | awk '{sub(/[0-9]+/, "", $(NF-1)); print }'
+      | uniq
+  register: mounted_disks
+  changed_when: False
+
+- name: Gather the list of all devices
+  ansible.builtin.shell:
+    cmd: >
+      lsblk --list --noheadings --output NAME
+      | awk '/^sd/{print $1}'
+      | awk '{sub(/[0-9]+/, "", $(NF-1)); print }'
+      | uniq
+  register: all_disks
+  changed_when: False
+
+- name: Calculate the unused devices
+  set_fact:
+    unused_disks: "{{ all_disks.stdout_lines | difference(mounted_disks.stdout_lines) }}"
+
+- name: debug
+  ansible.builtin.debug:
+    var: mounted_disks.stdout_lines
+
+- name: debug
+  ansible.builtin.debug:
+    var: all_disks.stdout_lines
+
+- name: debug
+  ansible.builtin.debug:
+    var: unused_disks
+
+- name: create filesystem
+  community.general.filesystem:
+    fstype: "{{ logs_filesystem }}"
+    dev: "/dev/{{ item }}"
+  loop: "{{ unused_disks }}"
+
+- name: mount data volumes
+  ansible.posix.mount:
+    src: "/dev/{{ item }}"
+    path: "{{ logs_dir }}/{{ logs_dir_prefix }}{{ index }}"
+    opts: defaults
+    state: mounted
+    fstype: "{{ logs_filesystem }}"
+  loop: "{{ unused_disks }}"
+  loop_control:
+    index_var: index
+
+- name: get data volumes
+  ansible.builtin.shell:
+    cmd: >
+      lsblk --list --noheadings --output MOUNTPOINT
+      | grep -i "{{ logs_dir }}/{{ logs_dir_prefix }}"
+  register: mounted_data_disks
+
+- name: set data disk variable
+  ansible.builtin.set_fact:
+    broker_logs_disks: "{{ mounted_data_disks.stdout }}"
+
+- name: list mounted data disks
+  ansible.builtin.debug:
+    var: "{{ broker_logs_disks }}"
