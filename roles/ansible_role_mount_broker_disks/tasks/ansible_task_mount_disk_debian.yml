@@ -70,4 +70,4 @@
 
 - name: list mounted data disks
   ansible.builtin.debug:
-    var: "{{ broker_logs_disks }}"
+    var: broker_logs_disks
