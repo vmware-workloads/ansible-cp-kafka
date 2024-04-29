@@ -87,3 +87,12 @@
 - name: list mounted data disks
   ansible.builtin.debug:
     var: broker_logs_disks
+
+- name: set brokers
+  ansible.builtin.set_fact:
+    kafka_broker_custom_properties:
+      logs.dir: "{{ broker_logs_disks }}"
+
+
+- debug:
+    var: hostvars
