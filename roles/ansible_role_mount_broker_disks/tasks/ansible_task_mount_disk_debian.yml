@@ -83,7 +83,7 @@
 - name: set brokers logs.dir parameter
   ansible.builtin.set_fact:
     kafka_broker_custom_properties:
-      log.dirs: "{{ output.files | selectattr('path', 'defined') | map(attribute='path') | list | sort }}"
+      log.dirs: "{{ output.files | selectattr('path', 'defined') | map(attribute='path') | list | sort | join(',') }}"
 
 - name: list mounted data disks
   ansible.builtin.debug:
