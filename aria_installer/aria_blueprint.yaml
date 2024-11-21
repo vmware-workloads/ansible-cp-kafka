@@ -122,7 +122,7 @@ resources:
     properties:
       image: ${input.vmImage}
       flavor: ${input.control-center_vmSize}
-      name: ${'kafka-control-' + to_string(count.index)}
+      name: kafka-control-vm
       remoteAccess:
         authentication: usernamePassword
         username: ${input.vmUsername}
@@ -154,8 +154,8 @@ resources:
     allocatePerInstance: true
     properties:
       image: ${input.vmImage}
-      flavor: ${zookeeper_vmSize}
-      name: ${'dse-' + to_string(count.index)}
+      flavor: ${input.zookeeper_vmSize}
+      name: zookeeper-vm
       remoteAccess:
         authentication: usernamePassword
         username: ${input.vmUsername}
@@ -189,6 +189,7 @@ resources:
       imageRef: ${input.vmImage}
       count: ${input.broker_vmCount}
       flavor: ${input.broker_vmSize}
+      name: ${'kafka-broker-' + to_string(count.index)}      
       remoteAccess:
         authentication: usernamePassword
         username: ${input.vmUsername}
