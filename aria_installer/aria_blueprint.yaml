@@ -1,6 +1,6 @@
 name: confluent-kafka
 version: 1.0.0
-formatVersion: 1
+formatVersion: 2
 inputs:
   vmImage:
     type: string
@@ -94,8 +94,8 @@ resources:
       aapSSL: false
       verbose: true
       organization_name: Default
-      job_template_name: CP-Kafka Template
-      inventory_name: cp-${env.deploymentId}
+      job_template_name: Confluent Platform Kafka Template
+      inventory_name: ${env.blueprintName}-${env.deploymentId}
       inventory_variables:
         use_ssl: true
       hosts:

@@ -2,16 +2,13 @@ AAP vRO Workflow Installer
 ==========================
 
 Installs the given aria blueprint and vro workflows into aria automation.  
-The automation will then be available in Service Broker.   \#\# Prerequisites
+The automation will then be available in Service Broker.
+
+## Prerequisites
 
 -   AAP installed and running
 
--   Aria / VCF Automation configured with VM flavour mappings (and configured as
-    per the name):
-
-    -   dse-16vcpu-48gb
-
-    -   dse-16vcpu-64gb
+-   Aria / VCF Automation configured with VM flavour mappings: small/medium/large
 
 -   Note: pulls Ubuntu images from the web. If required, alter the template to
     use a local image (image mapping in VCF Automation required)
