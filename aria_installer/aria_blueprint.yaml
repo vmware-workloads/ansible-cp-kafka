@@ -120,7 +120,7 @@ resources:
     type: Cloud.vSphere.Machine
     allocatePerInstance: true
     properties:
-      image: ${input.vmImage}
+      imageref: ${input.vmImage}
       flavor: ${input.control-center_vmSize}
       name: kafka-control-vm
       remoteAccess:
@@ -153,7 +153,7 @@ resources:
     type: Cloud.vSphere.Machine
     allocatePerInstance: true
     properties:
-      image: ${input.vmImage}
+      imageref: ${input.vmImage}
       flavor: ${input.zookeeper_vmSize}
       name: zookeeper-vm
       remoteAccess:
