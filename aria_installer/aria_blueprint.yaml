@@ -143,10 +143,7 @@ resources:
             sudo: ALL=(ALL) NOPASSWD:ALL 
         ssh_pwauth: true
         runcmd:
-          - netplan apply
-        ssh_pwauth: true
-        runcmd:
-          - netplan apply    
+          - netplan apply  
       storage:
         bootDiskCapacityInGB: ${input.os_diskSize}
   zookeeper:
@@ -176,10 +173,7 @@ resources:
             sudo: ALL=(ALL) NOPASSWD:ALL 
         ssh_pwauth: true
         runcmd:
-          - netplan apply
-        ssh_pwauth: true
-        runcmd:
-          - netplan apply    
+          - netplan apply 
       storage:
         bootDiskCapacityInGB: ${input.os_diskSize}
   kafka-broker:
@@ -208,9 +202,6 @@ resources:
         ssh_pwauth: true
         runcmd:
           - netplan apply
-        ssh_pwauth: true
-        runcmd:
-          - netplan apply  
       networks:
         - network: ${resource.web_net.id}
           assignment: static
